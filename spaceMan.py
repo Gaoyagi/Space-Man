@@ -41,10 +41,8 @@ def get_guessed_word(letters_guessed):
     '''
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
-    temp = ""
-    for letter in letters_guessed:
-        temp += letter
-    print (temp)
+    temp = "".join(letters_guessed)
+    return temp
 
 def is_guess_in_word(guess, secret_word, letters_guessed, wrong):
     '''
@@ -81,7 +79,7 @@ def spaceman(secret_word):
     #TODO: show the player information about the game according to the project spec
     print("welcome to Spaceman, the goal of this game is to guess a mystery word character by character")
     print(f"""wrong guess will make you lose a life ({life} live(s) total), \nand correct guesses will show their positions in the word""")
-    get_guessed_word(letters_guessed)
+    print(get_guessed_word(letters_guessed))
     while life > 0 and is_word_guessed(secret_word, letters_guessed) == False:
         #TODO: Ask the player to guess one letter per round and check that it is only one letter
         invalid = True
@@ -103,32 +101,43 @@ def spaceman(secret_word):
             print("incorrect guess")
 
         #TODO: show the guessed word so far
-        get_guessed_word(letters_guessed)
+        print(get_guessed_word(letters_guessed))
         print("Wrong guesses: ")
         print("".join(wrong))
     #TODO: check if the game has been won or lost
     if(life == 0):
         print("You've lost the game")
-        print("The correct wo   rd was: " + secret_word)
+        print("The correct word was: " + secret_word)
     elif is_word_guessed(secret_word, letters_guessed):
         print("You've won the game")
 
 
-
-
-
 #These function calls that will start the game
-again = True
-while again:
-    secret_word = load_word()
-    spaceman(secret_word)
-    confirm = input("play again? (y/n): ")
-    yes_no = True
-    while yes_no:
-        if confirm == "n":
-            again = False
-            yes_no = False
-        elif confirm == "y":
-            yes_no = False
-        else:
-            print("Invalid choice")
+    
+if __name__ == '__main__':
+    again = True
+    while again:
+        secret_word = load_word()
+        spaceman(secret_word)
+        confirm = input("play again? (y/n): ")
+        yes_no = True
+        while yes_no:
+            if confirm == "n":
+                again = False
+                yes_no = False
+            elif confirm == "y":
+                yes_no = False
+            else:
+                print("Invalid choice")
+
+
+def test_is_guess_in_word():
+   assert is_guess_in_word('a', 'apple', ['_ ', '_ ', '_ ', '_ ', '_ '], [])    #test correct guess
+   assert not is_guess_in_word('b', 'apple', ['_ ', '_ ', '_ ', '_ ', '_ '], [])    #test bad guess 
+
+def test_get_guessed_word():
+    assert get_guessed_word(['a', 'p', 'p', '_ ', '_ ']) == "app_ _ "
+
+def test_is_word_guessed():
+    assert not is_word_guessed("apple", ['a', 'p', 'p', '_ ', '_ '])    #test not guessed
+    assert is_word_guessed("apple", ['a', 'p', 'p', 'l', 'e'])      #test guessed

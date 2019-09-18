@@ -7,7 +7,7 @@
 #after the game is over you have an option to play again
 
 #######################Pseduo code#########################################
-letters_guessed: a list that holds the guessed letters and _ for unguessed letters
+letters_guessed: a list that holds the correctly guessed letters and _ for unguessed letters
 secret_word: a string variable that holds the randomized word from the word
 guess: the suer inputted guess for that round
 wrong: list that holds all the incorrect guesses the user inputs
